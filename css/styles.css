@@ -1,42 +1,170 @@
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.about-section {
+  transition: background 0.5s, color 0.5s;
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  .about-title {
+    font-size: 1.3rem;
+  }
+  .about-desc {
+    font-size: 1rem;
+  }
+  .hero-image {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Refined monochrome theme */
+.monochrome-bg, .about-section, .hero-section, .footer, .navbar {
+  background: #111 !important;
+  color: #fff !important;
+}
+.about-title, .hero-title, .navbar .navbar-brand {
+  color: #fff !important;
+}
+.about-desc, .hero-subtitle, .footer {
+  color: #bbb !important;
+}
+.icon-link {
+  color: #fff !important;
+}
+.icon-link:hover {
+  color: #888 !important;
+}
 @charset "UTF-8";
 /*!
 * Start Bootstrap - Grayscale v7.0.2 (https://startbootstrap.com/theme/grayscale)
 * Copyright 2013-2021 Start Bootstrap
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-grayscale/blob/master/LICENSE)
 */
-/*!
- * Bootstrap v5.0.2 (https://getbootstrap.com/)
- * Copyright 2011-2021 The Bootstrap Authors
- * Copyright 2011-2021 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
+
 :root {
-  --bs-blue: #0d6efd;
-  --bs-indigo: #6610f2;
-  --bs-purple: #7464a1;
-  --bs-pink: #d63384;
-  --bs-red: #a16468;
-  --bs-orange: #fd7e14;
-  --bs-yellow: #e4c662;
-  --bs-green: #67c29c;
-  --bs-teal: #64a19d;
-  --bs-cyan: #1cabc4;
-  --bs-white: #fff;
-  --bs-gray: #6c757d;
-  --bs-gray-dark: #343a40;
-  --bs-primary: #64a19d;
-  --bs-secondary: #7464a1;
-  --bs-success: #67c29c;
-  --bs-info: #1cabc4;
-  --bs-warning: #e4c662;
-  --bs-danger: #a16468;
-  --bs-light: #f8f9fa;
-  --bs-dark: #212529;
-  --bs-black: #000;
-  --bs-white: #fff;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  --mono-bg: #111;
+  --mono-fg: #fff;
+  --mono-accent: #888;
+  --mono-border: #222;
+  --mono-link: #fff;
+  --mono-link-hover: #bbb;
+}
+
+body.monochrome-bg {
+  background: var(--mono-bg) !important;
+  color: var(--mono-fg) !important;
+}
+
+.navbar,
+.footer {
+  background: #000 !important;
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand {
+  color: var(--mono-fg) !important;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.navbar .nav-link:hover {
+  color: var(--mono-link-hover) !important;
+}
+
+.hero-section {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mono-bg);
+  border-bottom: 1px solid var(--mono-border);
+}
+
+.hero-content {
+  padding: 2rem 1rem;
+}
+
+.hero-image {
+  border: 4px solid var(--mono-fg);
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+}
+
+.hero-title {
+  color: var(--mono-fg);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+  color: var(--mono-accent);
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+.animated-text {
+  display: inline-block;
+  border-right: 2px solid var(--mono-fg);
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 2.5s steps(30, end), blink-caret 0.7s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--mono-fg); }
+}
+
+.hero-links .icon-link {
+  color: var(--mono-fg);
+  font-size: 2rem;
+  margin: 0 0.5rem;
+  transition: color 0.2s;
+}
+.hero-links .icon-link:hover {
+  color: var(--mono-link-hover);
+}
+
+.about-section {
+  background: var(--mono-bg);
+  color: var(--mono-fg);
+  padding: 4rem 0 2rem 0;
+}
+.about-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.about-desc {
+  color: var(--mono-accent);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.footer {
+  border-top: 1px solid var(--mono-border);
+  color: var(--mono-accent) !important;
 }
 
 *,
