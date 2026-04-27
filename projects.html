@@ -1,168 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>Projects | Emmanuel Olang'</title>
-        <meta name="description" content="Selected projects and gists by Emmanuel Olang'." />
-        <meta name="author" content="Emmanuel Olang" />
-        <meta name="robots" content="index,follow" />
-        <meta name="theme-color" content="#ffffff" />
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Projects | Emmanuel Olang'</title>
+    <meta name="description" content="Selected projects and gists by Emmanuel Olang'." />
+    <meta name="author" content="Emmanuel Olang'" />
+    <meta name="robots" content="index,follow" />
 
-        <link rel="canonical" href="https://e-olang.github.io/projects.html" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Projects | Emmanuel Olang'" />
-        <meta property="og:description" content="Selected projects and gists by Emmanuel Olang'." />
-        <meta property="og:url" content="https://e-olang.github.io/projects.html" />
-        <meta property="og:image" content="https://e-olang.github.io/assets/img/profile.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Projects | Emmanuel Olang'" />
-        <meta name="twitter:description" content="Selected projects and gists by Emmanuel Olang'." />
-        <meta name="twitter:image" content="https://e-olang.github.io/assets/img/profile.png" />
-        
-        <link rel="icon" type="image/x-icon" href="assets/img/icons/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <script defer src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
-        <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
+    <link rel="canonical" href="https://e-olang.github.io/projects.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Projects | Emmanuel Olang'" />
+    <meta property="og:description" content="Selected projects and gists by Emmanuel Olang'." />
+    <meta property="og:url" content="https://e-olang.github.io/projects.html" />
+    <meta property="og:image" content="https://e-olang.github.io/assets/img/profile.png" />
+    <meta name="twitter:card" content="summary" />
 
-    </head>
-    <body id="page-top">
-        <a class="skip-link" href="#main">Skip to main content</a>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand text-black" href="index.html" >Home</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars" aria-hidden="true"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link text-black" href="#gists">Gists</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        
-        <main id="main">
-        <!-- Projects-->
-        <section class="projects-section bg-light" id="projects">
-            <div class="container px-4 px-lg-5">
-                <h2 class="text-black featured-text"> Projects</h2>  <br>    
-                <!-- Project One Row-->
-                <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">Road Track(s) Identification Using Image Segmentation</h4>
-                                    <p class="mb-0 text-white-50">
-                                        The project aims to create a low-latency reliable tool using computer vision technologies to aid with road track identification through image segmentation tasks.
-                                        A model is developed based on the popular U-Net architecture to achieve this goal.<br>
-                                        <i>This work is purely for educative purposes on the potential use of AI in this field/problem space. </i>
-                                        <br><br>
-                                        Read more about it <a href="https://github.com/e-olang/Computer-Vision/tree/main/Image%20Segmentation/Road%20Masking" target="_blank" rel="noopener noreferrer">here.</a>
-                                    </p>
-                                </div>
+    <link rel="icon" type="image/x-icon" href="assets/img/icons/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+
+    <script>
+        (function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+    </script>
+    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <nav class="nav" data-nav>
+        <div class="shell nav__inner">
+            <a class="nav__brand" href="/">Emmanuel Olang'</a>
+            <ul class="nav__links">
+                <li><a class="nav__link" href="/">Home</a></li>
+                <li><a class="nav__link" href="writing.html">Writing</a></li>
+                <li><a class="nav__link" aria-current="page" href="projects.html">Projects</a></li>
+                <li>
+                    <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle theme">
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="main">
+        <div class="shell">
+            <header style="margin-bottom: 1.5rem;">
+                <h1>Projects</h1>
+                <p style="color: var(--muted); margin-top: 0.25rem;">
+                    A selection of things I've built — production work, research experiments, and small explorations.
+                </p>
+            </header>
+
+            <section>
+                <div class="section-title"><h2>Projects</h2></div>
+                <ul class="list">
+                    <li>
+                        <a class="list__item" href="https://github.com/e-olang/Computer-Vision/tree/main/Image%20Segmentation/Road%20Masking" target="_blank" rel="noopener noreferrer">
+                            <div class="list__row">
+                                <span class="list__title">Road Track Identification with U-Net</span>
+                                <span class="list__meta">Computer Vision</span>
                             </div>
-                        </div>
-                </div>
-                <hr>
-
-                <!-- Project Two Row-->
-                <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    
-                        <div class="bg-white text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-black">Research Paper Search APP.</h4>
-                                    <p class="mb-0 text-black-50">
-                                        By harnessing the power of a Sentence Transformer model, the system enables context-aware searches, surpassing 
-                                        traditional keyword-based methods. <br>
-                                        Researchers can now effortlessly input natural language queries, retrieving more precise and relevant abstracts.
-                                        This project showcases the potential of advanced NLP techniques in revolutionizing information discovery across
-                                        various domains, promising a transformative solutions for academia and industry alike.<br>
-                                        Try it out <a href="https://huggingface.co/spaces/eolang/Search" target="_blank" rel="noopener noreferrer">here.</a>
-                                    </p>
-                                    
-                                </div>
+                            <p class="list__desc">A low-latency tool that uses image segmentation to identify road tracks. Built on the U-Net architecture, intended as an educational exploration of computer vision in this problem space.</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="list__item" href="https://huggingface.co/spaces/eolang/Search" target="_blank" rel="noopener noreferrer">
+                            <div class="list__row">
+                                <span class="list__title">Research Paper Search</span>
+                                <span class="list__meta">NLP · Demo</span>
                             </div>
-                        </div>
-                    
-                </div>
-                <hr>
-
-                <!-- Project Three Row-->
-                <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    <div class="bg-black text-center h-100 project">
-                        <div class="d-flex h-100">
-                            <div class="project-text w-100 my-auto text-center text-lg-left">
-                                <h4 class="text-white">Swahili Language Model (MLM Task) </h4>
-                                <p class="mb-0 text-white-50">
-                                    Pre-trained on a large corpus of Swahili data in a self-supervised fashion. 
-                                    Focuses on the Masked Language Modeling (MLM) task. i.e. taking a sentence, the model randomly masks 15% of 
-                                    the words in the input then run the entire masked sentence through the model and has to predict the masked words. <br><br>
-                                    Read more about it <a href="https://huggingface.co/eolang/SW-v1" target="_blank" rel="noopener noreferrer">here.</a>
-                                </p>
+                            <p class="list__desc">Context-aware paper search powered by sentence transformers. Researchers can input natural-language queries and retrieve more relevant abstracts than with keyword-only search.</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="list__item" href="https://huggingface.co/eolang/SW-v1" target="_blank" rel="noopener noreferrer">
+                            <div class="list__row">
+                                <span class="list__title">Swahili Language Model (MLM)</span>
+                                <span class="list__meta">NLP · Pre-training</span>
                             </div>
-                        </div>
-                    </div>
-            </div>
-            <hr>
-            </div>
-        </section>
-        <!-- Projects Section End -->
+                            <p class="list__desc">A masked language model pre-trained on a large Swahili corpus in a self-supervised fashion — randomly masks 15% of the tokens and learns to predict them.</p>
+                        </a>
+                    </li>
+                </ul>
+            </section>
 
-        <!-- Gists -->
-        <section class="projects-sec-section bg-light" id="gists">
-            <div class="collapsible container bg-light">
-                <h4 class="text-black featured-text">Gists</h4>
-                <div class="content">
-                    <!-- Gist One Row-->
-                    <div class="project-text w-100 my-auto text-center text-lg-left">
-                        <div class="workpadding">
-                            <h4 class="text-black text-left">Fine Tuning BERT Uncased for Swahili text classification</h4>
-                            <ul class="mb-0 text-black text-left">
-                                A notebook on fine tuning BERT Uncased MLM model for multi-class text classification of Swahili dataset.
-                                <script src="https://gist.github.com/e-olang/d1a5e78ef00968c26b7728e3871d6c05.js"></script>
-                            </ul>
-                        </div>
-                    </div>
-                    <hr>
-                    
-                    <!-- Gist Two Row-->
-                    <div class="project-text w-100 my-auto text-center text-lg-left">
-                        <div class="workpadding">
-                            <h4 class="text-black text-left">N-Gram Language Modelling</h4>
-                            <ul class="mb-0 text-black text-left">
-                                A brief illustration of language modelling using NLTK Datasets and Library.
-                                <script src="https://gist.github.com/e-olang/539288ee7671230afcf7d69468e7e6b5.js"></script>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <!-- Gist Three Row-->
-                    <div class="project-text w-100 my-auto text-center text-lg-left">
-                        <div class="workpadding">
-                            <h4 class="text-black text-left">Pillow Image Verification</h4>
-                            <ul class="mb-0 text-black text-left">
-                                Was having issues with the image verification for an image classifier. Needed verification to ensure that the image is a real image thus reduce chances of false positives.
-                                For this specific task images hade to have some green pigment. This is not ideal but it works for the purpose of this project.
-                                Resizing the image to 256 by 256 pixels reduces the area to check thus kind of efficient.
-                                If you have a better a way of doing this, please let me know. oluoch9@gmail.com
-                                <script src="https://gist.github.com/e-olang/faad4b692943d1906117748c0f02d743.js"></script>
-                            </ul>
-                        </div>
-                    </div> 
-                </div>
-              </div>              
-        </section>
-        </main>
+            <section>
+                <div class="section-title"><h2>Gists &amp; notebooks</h2></div>
+                <ul class="list">
+                    <li>
+                        <a class="list__item" href="https://gist.github.com/e-olang/d1a5e78ef00968c26b7728e3871d6c05" target="_blank" rel="noopener noreferrer">
+                            <div class="list__row">
+                                <span class="list__title">Fine-tuning BERT-uncased for Swahili text classification</span>
+                                <span class="list__meta">Notebook</span>
+                            </div>
+                            <p class="list__desc">A walkthrough on fine-tuning a BERT-uncased MLM for multi-class text classification on a Swahili dataset.</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="list__item" href="https://gist.github.com/e-olang/539288ee7671230afcf7d69468e7e6b5" target="_blank" rel="noopener noreferrer">
+                            <div class="list__row">
+                                <span class="list__title">N-gram language modelling</span>
+                                <span class="list__meta">Notebook</span>
+                            </div>
+                            <p class="list__desc">A brief illustration of language modelling using NLTK datasets and library.</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="list__item" href="https://gist.github.com/e-olang/faad4b692943d1906117748c0f02d743" target="_blank" rel="noopener noreferrer">
+                            <div class="list__row">
+                                <span class="list__title">Pillow image verification</span>
+                                <span class="list__meta">Snippet</span>
+                            </div>
+                            <p class="list__desc">A quick approach to verifying real images during classification — checking for green pigment after resizing to 256×256 to keep things fast.</p>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </main>
 
-       
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="js/scripts.js"></script>
-    </body>
+    <footer class="footer">
+        <div class="shell footer__inner">
+            <span>© Emmanuel Olang' · 2026</span>
+            <span><a href="https://github.com/e-olang/e-olang.github.io" target="_blank" rel="noopener noreferrer">Source</a></span>
+        </div>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
 </html>

@@ -1,71 +1,60 @@
-/*!
-* Start Bootstrap - Grayscale v7.0.2 (https://startbootstrap.com/theme/grayscale)
-* Copyright 2013-2021 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-grayscale/blob/master/LICENSE)
-*/
-//
-// Scripts
-// 
+/* Minimal site script — theme toggle + nav border on scroll */
 
-window.addEventListener('DOMContentLoaded', event => {
+(function () {
+  const STORAGE_KEY = "theme";
+  const root = document.documentElement;
 
-    // Navbar shrink function
-    var navbarShrink = function () {
-        const navbarCollapsible = document.body.querySelector('#mainNav');
-        if (!navbarCollapsible) {
-            return;
-        }
-        if (window.scrollY === 0) {
-            navbarCollapsible.classList.remove('navbar-shrink')
-        } else {
-            navbarCollapsible.classList.add('navbar-shrink')
-        }
+  function applyTheme(theme) {
+    if (theme === "light" || theme === "dark") {
+      root.setAttribute("data-theme", theme);
+    } else {
+      root.removeAttribute("data-theme");
+    }
+  }
 
-    };
+  function getStoredTheme() {
+    try {
+      return localStorage.getItem(STORAGE_KEY);
+    } catch (_) {
+      return null;
+    }
+  }
 
-    // Shrink the navbar 
-    navbarShrink();
+  function setStoredTheme(theme) {
+    try {
+      if (theme) localStorage.setItem(STORAGE_KEY, theme);
+      else localStorage.removeItem(STORAGE_KEY);
+    } catch (_) {}
+  }
 
-    // Shrink the navbar when page is scrolled
-    document.addEventListener('scroll', navbarShrink);
+  function currentResolvedTheme() {
+    const stored = getStoredTheme();
+    if (stored === "light" || stored === "dark") return stored;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
 
-    // Activate Bootstrap scrollspy on the main nav element
-    const mainNav = document.body.querySelector('#mainNav');
-    if (mainNav) {
-        new bootstrap.ScrollSpy(document.body, {
-            target: '#mainNav',
-            offset: 74,
-        });
-    };
+  applyTheme(getStoredTheme());
 
-    // Collapse responsive navbar when toggler is visible
-    const navbarToggler = document.body.querySelector('.navbar-toggler');
-    const responsiveNavItems = [].slice.call(
-        document.querySelectorAll('#navbarResponsive .nav-link')
-    );
-    responsiveNavItems.map(function (responsiveNavItem) {
-        responsiveNavItem.addEventListener('click', () => {
-            if (window.getComputedStyle(navbarToggler).display !== 'none') {
-                navbarToggler.click();
-            }
-        });
-    });
-
-
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.querySelector(".content");
-        if (content.style.display === "block") {
-        content.style.display = "none";
-        } else {
-        content.style.display = "block";
-        }
-    });
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.querySelector("[data-theme-toggle]");
+    if (toggle) {
+      toggle.addEventListener("click", () => {
+        const next = currentResolvedTheme() === "dark" ? "light" : "dark";
+        applyTheme(next);
+        setStoredTheme(next);
+      });
     }
 
-
-});
+    const nav = document.querySelector("[data-nav]");
+    if (nav) {
+      const onScroll = () => {
+        if (window.scrollY > 4) nav.classList.add("is-scrolled");
+        else nav.classList.remove("is-scrolled");
+      };
+      onScroll();
+      document.addEventListener("scroll", onScroll, { passive: true });
+    }
+  });
+})();

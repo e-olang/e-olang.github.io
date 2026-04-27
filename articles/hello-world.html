@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hello, world — starting to write | Emmanuel Olang'</title>
+    <meta name="description" content="A short note on why I'm starting this writing space, and what to expect here." />
+    <meta name="author" content="Emmanuel Olang'" />
+    <meta name="robots" content="index,follow" />
+
+    <link rel="canonical" href="https://e-olang.github.io/articles/hello-world.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Hello, world — starting to write" />
+    <meta property="og:description" content="A short note on why I'm starting this writing space, and what to expect here." />
+    <meta property="og:url" content="https://e-olang.github.io/articles/hello-world.html" />
+    <meta property="og:image" content="https://e-olang.github.io/assets/img/profile.png" />
+    <meta property="article:author" content="Emmanuel Olang'" />
+    <meta property="article:published_time" content="2026-04-27" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="icon" type="image/x-icon" href="../assets/img/icons/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="../css/styles.css" rel="stylesheet" />
+
+    <script>
+        (function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+    </script>
+    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <nav class="nav" data-nav>
+        <div class="shell nav__inner">
+            <a class="nav__brand" href="../">Emmanuel Olang'</a>
+            <ul class="nav__links">
+                <li><a class="nav__link" href="../">Home</a></li>
+                <li><a class="nav__link" aria-current="page" href="../writing.html">Writing</a></li>
+                <li><a class="nav__link" href="../projects.html">Projects</a></li>
+                <li>
+                    <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle theme">
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="main">
+        <div class="shell">
+            <a class="back-link" href="../writing.html">All writing</a>
+
+            <article>
+                <header class="article-header">
+                    <h1>Hello, world — starting to write</h1>
+                    <div class="article-meta">
+                        <time datetime="2026-04-27">Apr 27, 2026</time>
+                        <span class="article-meta__dot" aria-hidden="true"></span>
+                        <span>2 min read</span>
+                        <span class="article-meta__dot" aria-hidden="true"></span>
+                        <span class="tags"><span class="tag">notes</span></span>
+                    </div>
+                </header>
+
+                <div class="prose">
+                    <p>
+                        I've been meaning to write more for a while. Mostly short notes on things I learn while building —
+                        the kind of stuff I usually scribble in a private notebook and never look at again. This space is
+                        the public version of that notebook.
+                    </p>
+
+                    <h2>What you'll find here</h2>
+                    <p>
+                        Roughly three kinds of posts:
+                    </p>
+                    <ul>
+                        <li><strong>Tutorials</strong> — step-by-step walkthroughs of things I've built or learned.</li>
+                        <li><strong>Notes</strong> — short, focused write-ups on a single idea or problem.</li>
+                        <li><strong>Postmortems</strong> — what went wrong, what I'd do differently, and what stuck.</li>
+                    </ul>
+
+                    <h2>Why bother?</h2>
+                    <p>
+                        Writing is the cheapest way I know to find holes in my understanding. If I can't explain a concept
+                        cleanly to a stranger, I probably haven't earned it yet. So this is partly for me, and partly for
+                        anyone walking the same path.
+                    </p>
+
+                    <h2>A small example</h2>
+                    <p>
+                        Most posts here will involve some code. The reading layout supports inline things like
+                        <code>tokenizer.encode(text)</code> as well as code blocks:
+                    </p>
+
+<pre><code>from transformers import AutoTokenizer, AutoModel
+
+tokenizer = AutoTokenizer.from_pretrained("eolang/SW-v1")
+model = AutoModel.from_pretrained("eolang/SW-v1")
+
+inputs = tokenizer("Habari ya asubuhi", return_tensors="pt")
+outputs = model(**inputs)
+</code></pre>
+
+                    <p>
+                        That's it for now. More soon — thanks for reading.
+                    </p>
+                </div>
+            </article>
+
+            <hr />
+
+            <p style="font-size: 0.9rem; color: var(--muted);">
+                Found a typo or have feedback?
+                <a href="https://twitter.com/OlangJoe" target="_blank" rel="noopener noreferrer">@OlangJoe</a>
+                or
+                <a href="mailto:oluoch9@gmail.com">email me</a>.
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="shell footer__inner">
+            <span>© Emmanuel Olang' · 2026</span>
+            <span><a href="https://github.com/e-olang/e-olang.github.io" target="_blank" rel="noopener noreferrer">Source</a></span>
+        </div>
+    </footer>
+
+    <script src="../js/scripts.js"></script>
+</body>
+</html>
