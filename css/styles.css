@@ -43,22 +43,6 @@
   --selection-text: #0a0a0a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0a0a0a;
-    --surface: #111111;
-    --text: #ededed;
-    --muted: #a1a1aa;
-    --subtle: #71717a;
-    --border: #27272a;
-    --hover: #18181b;
-    --accent: #ededed;
-    --code-bg: #18181b;
-    --code-text: #ededed;
-    --selection: #ededed;
-    --selection-text: #0a0a0a;
-  }
-}
 
 /* Reset */
 *,
@@ -217,10 +201,6 @@ main {
 .theme-toggle .icon-moon { display: block; }
 [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
-  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
-}
 
 /* Typography */
 h1, h2, h3, h4 {
