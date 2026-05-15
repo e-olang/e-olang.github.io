@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Can You Train a Segmentation Model with Just 5 Labeled Pixels? | Emmanuel Olang'</title>
+    <meta name="description"
+        content="Exploring partial cross-entropy loss for point-supervised remote sensing segmentation." />
+    <meta name="author" content="Emmanuel Olang'" />
+    <meta name="robots" content="index,follow" />
+
+    <link rel="canonical" href="https://e-olang.github.io/articles/point-label-supervision.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Can You Train a Segmentation Model with Just 5 Labeled Pixels?" />
+    <meta property="og:description"
+        content="Exploring partial cross-entropy loss for point-supervised remote sensing segmentation." />
+    <meta property="og:url" content="https://e-olang.github.io/articles/point-label-supervision.html" />
+    <meta property="og:image" content="https://e-olang.github.io/assets/img/profile.png" />
+    <meta property="article:author" content="Emmanuel Olang'" />
+    <meta property="article:published_time" content="2026-05-15" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="icon" type="image/x-icon" href="../assets/img/icons/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link href="../css/styles.css" rel="stylesheet" />
+
+    <script>
+        (function () { try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) { } })();
+    </script>
+    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <nav class="nav" data-nav>
+        <div class="shell nav__inner">
+            <a class="nav__brand" href="../">Emmanuel Olang'</a>
+            <ul class="nav__links">
+                <li><a class="nav__link" href="../">Home</a></li>
+                <li><a class="nav__link" aria-current="page" href="../writing.html">Writing</a></li>
+                <li><a class="nav__link" href="../projects.html">Projects</a></li>
+                <li>
+                    <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle theme">
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4" />
+                            <path
+                                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="main">
+        <div class="shell">
+            <a class="back-link" href="../writing.html">All writing</a>
+
+            <article>
+                <header class="article-header">
+                    <h1>Can You Train a Segmentation Model with Just 5 Labeled Pixels?</h1>
+                    <div class="article-meta">
+                        <time datetime="2026-05-15">May 15, 2026</time>
+                        <span class="article-meta__dot" aria-hidden="true"></span>
+                        <span>6 min read</span>
+                        <span class="article-meta__dot" aria-hidden="true"></span>
+                        <span class="tags">
+                            <span class="tag">tutorial</span>
+                            <span class="tag">remote sensing</span>
+                            <span class="tag">pytorch</span>
+                        </span>
+                    </div>
+                </header>
+
+                <div class="prose">
+                    <p>
+                        If you've ever labeled segmentation data, you know the pain: every single pixel needs a class.
+                        For a 512×512 image, that's 262,144 decisions. Multiply by hundreds of images and you're
+                        looking at weeks of annotation work.
+                    </p>
+
+                    <p>
+                        But what if you could train a decent model by labeling just <strong>5 pixels per image</strong>?
+                    </p>
+
+                    <p>
+                        That's the idea behind <strong>point-label supervision</strong> , and it works surprisingly
+                        well.
+                        In this post, I'll walk through the concept, implement it from scratch in PyTorch, and show real
+                        experiments on aerial imagery.
+                    </p>
+
+                    <h2>The Setup</h2>
+                    <p>
+                        <strong>Dataset:</strong> <!-- <a href="https://github.com/Junjue-Wang/LoveDA" target="_blank"
+                            rel="noopener noreferrer">LoveDA</a> ,
+                        aerial remote sensing imagery with 7 land-cover classes (building, road, water, barren, forest,
+                        agriculture, background). -->
+                    </p>
+                    <p>
+                        <strong>Model:</strong> A simple 3-level U-Net with ~300K parameters , nothing fancy, just
+                        enough to prove the concept.
+                    </p>
+                    <p>
+                        <strong>The trick:</strong> Partial cross-entropy loss.
+                    </p>
+
+                    <h2>What Is Partial Cross-Entropy?</h2>
+                    <p>Standard cross-entropy computes loss over every pixel:</p>
+
+                    <pre><code>CE = mean( -log(p_correct) )  for ALL pixels</code></pre>
+
+                    <p>Partial cross-entropy only computes loss on pixels that have labels:</p>
+
+                    <pre><code>pCE = sum( -log(p_correct) × M_labeled ) / sum(M_labeled)</code></pre>
+
+                    <p>
+                        Where <code>M_labeled</code> is a binary mask , 1 where we have a label, 0 everywhere else.
+                        Unlabeled pixels contribute zero gradient. The model still predicts all pixels, but only gets
+                        feedback on the labeled ones.
+                    </p>
+                    <p>In PyTorch, the implementation is almost trivially simple:</p>
+
+                    <pre><code>class PartialCELoss(nn.Module):
+    def __init__(self, ignore_index=255):
+        super().__init__()
+        self.ignore_index = ignore_index
+        self.ce = nn.CrossEntropyLoss(ignore_index=ignore_index, reduction="none")
+
+    def forward(self, logits, targets):
+        loss_map = self.ce(logits, targets)                   # (B, H, W)
+        mask = (targets != self.ignore_index).float()         # 1 where labeled
+        n_labeled = mask.sum().clamp(min=1.0)
+        return (loss_map * mask).sum() / n_labeled</code></pre>
+
+                    <p>
+                        Unlabeled pixels are set to 255 in the target mask. PyTorch's <code>ignore_index</code>
+                        handles them cleanly.
+                    </p>
+
+                    <h2>Simulating Point Labels</h2>
+                    <p>
+                        We start with full dense masks (from LoveDA) and simulate point labels by randomly sampling
+                        N pixels per image , setting everything else to 255:
+                    </p>
+
+                    <pre><code>partial = torch.full_like(mask, 255)
+valid = (mask != 255).nonzero(as_tuple=False)
+sel = valid[torch.randperm(len(valid))[:num_points]]
+for c in sel:
+    partial[c[0], c[1]] = mask[c[0], c[1]]</code></pre>
+
+                    <p>
+                        With 20 points on a 256×256 image, that's <strong>0.03% of pixels</strong> labeled.
+                        The rest is all unlabeled.
+                    </p>
+
+                    <h2>Experiment 1: How Many Points Do You Need?</h2>
+                    <p>
+                        I trained three identical U-Nets from scratch, varying only the number of point labels per
+                        image: 5, 20, and 100.
+                    </p>
+
+                    <h3>Results</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Points / image</th>
+                                <th>Best val mIoU</th>
+                                <th>Final loss</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>5</td>
+                                <td>0.1592</td>
+                                <td>1.354</td>
+                            </tr>
+                            <tr>
+                                <td><strong>20</strong></td>
+                                <td><strong>0.1918</strong></td>
+                                <td>1.198</td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>0.1842</td>
+                                <td>1.195</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        For reference, random guessing on 7 classes gives ~0.05 mIoU. So even <strong>5 labeled
+                            pixels</strong> (0.008% of the image) gets us 3× above random.
+                    </p>
+                    <p>
+                        The sweet spot was 20 points , enough signal for the model to learn, without overfitting to
+                        the sparse labels. The 100-point model actually scored slightly lower, likely because 5 epochs
+                        wasn't enough for it to fully leverage the extra supervision.
+                    </p>
+
+                    <h3>What This Means</h3>
+                    <p>
+                        If you're annotating remote sensing data and can't afford dense masks, just clicking 20 points
+                        per image gets you most of the way there. The annotation time drops from hours to seconds per
+                        image.
+                    </p>
+
+                    <h2>Experiment 2: Can Focal Loss Help?</h2>
+                    <p>
+                        Standard CE treats all labeled pixels equally. But with only 20 labels per image, some of those
+                        pixels are "easy" , sitting in the middle of a big forest patch where the answer is obvious.
+                        The model learns those quickly but wastes gradient on them.
+                    </p>
+                    <p>
+                        <strong>Focal loss</strong> fixes this by down-weighting easy (high-confidence) pixels:
+                    </p>
+
+                    <pre><code>pFCE = sum( (1 - p_t)^γ × (-log p_t) × M_labeled ) / sum(M_labeled)</code></pre>
+
+                    <p>
+                        The <code>(1 - p_t)^γ</code> term shrinks toward zero for confident predictions. With γ=2,
+                        a pixel predicted at 90% confidence contributes 100× less gradient than one at 50%.
+                    </p>
+
+                    <h3>Results</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Loss</th>
+                                <th>Best val mIoU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Partial CE</td>
+                                <td>0.1509</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Partial Focal CE (γ=2)</strong></td>
+                                <td><strong>0.1898</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        A <strong>25.7% relative improvement</strong> just by switching the loss function. Focal loss's
+                        mIoU starts slower (the model initially struggles with the reweighted gradients) but catches up
+                        and surpasses plain CE by epoch 5 , and the curve is still climbing.
+                    </p>
+
+                    <h2>Key Takeaways</h2>
+                    <ol>
+                        <li><strong>Partial CE is dead simple and works.</strong> One class, ~10 lines of code, and it
+                            handles sparse labels cleanly.</li>
+                        <li><strong>20 points per image is a practical sweet spot.</strong> You get most of the benefit
+                            of dense annotation at a fraction of the cost.</li>
+                        <li><strong>Focal loss is a free upgrade for sparse labels.</strong> Same training setup, better
+                            results, because it stops wasting gradient on easy pixels.</li>
+                        <li><strong>The model generalizes beyond its labels.</strong> Despite seeing only 0.03% of
+                            labeled pixels, the model learns to segment entire regions , skip connections and spatial
+                            convolutions propagate the sparse signal across the image.</li>
+                    </ol>
+
+                    <!-- <h2>Try It Yourself</h2>
+                    <p>
+                        The full notebook with all code, training loops, and results is in this repo. It runs on
+                        Google Colab's free T4 GPU in under 30 minutes.
+                    </p>
+                    <p>If you want to go further:</p>
+                    <ul>
+                        <li>Try more epochs (the focal loss curve was still climbing at epoch 5)</li>
+                        <li>Add a learning rate scheduler (cosine annealing helps stabilize the noisy mIoU)</li>
+                        <li>Try semi-supervised pseudo-labeling on the unlabeled pixels</li>
+                        <li>Swap in a bigger backbone (ResNet-50 DeepLabV3+) if you have the compute</li>
+                    </ul>
+
+                    <p><em>Built with PyTorch, torchgeo, and a free Colab GPU.</em></p> -->
+                </div>
+            </article>
+
+            <hr />
+
+            <p style="font-size: 0.9rem; color: var(--muted);">
+                Found a typo or have feedback?
+                <!-- <a href="https://twitter.com/OlangJoe" target="_blank" rel="noopener noreferrer">@OlangJoe</a>
+                or -->
+                <a href="mailto:oluoch9@gmail.com">email me</a>.
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="shell footer__inner">
+            <span>© Emmanuel Olang' · 2026</span>
+            <span><a href="https://github.com/e-olang/e-olang.github.io" target="_blank"
+                    rel="noopener noreferrer">Source</a></span>
+        </div>
+    </footer>
+
+    <script src="../js/scripts.js"></script>
+</body>
+
+</html>
